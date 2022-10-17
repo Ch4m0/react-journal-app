@@ -1,4 +1,4 @@
-import { TitleOutlined, TurnedInNot } from "@mui/icons-material";
+import { TurnedInNot } from "@mui/icons-material";
 import {
   ListItem,
   ListItemIcon,

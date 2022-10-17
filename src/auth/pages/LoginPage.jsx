@@ -18,14 +18,15 @@ import {
 } from "../../store/auth/thunks";
 import { useDispatch, useSelector } from "react-redux";
 
+const formData = {
+  email: "abnercd92@gmail.com",
+  password: "chamo9300",
+}
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const { status, errorMessage } = useSelector((state) => state.auth);
 
-  const { email, password, onInputChange } = useForm({
-    email: "abnercd93@gmail.com",
-    password: "chamo9301",
-  });
+  const { email, password, onInputChange } = useForm(formData);
 
   const isAuthenticating = useMemo(() => status === "checking", [status]);
 

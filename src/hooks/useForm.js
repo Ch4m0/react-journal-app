@@ -22,6 +22,11 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
         createValidators()
     }, [formState])
 
+    useEffect(() => {
+        setFormState(initialForm)
+
+    }, [initialForm])
+
 
     const onInputChange = ({ target }) => {
 

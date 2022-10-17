@@ -7,7 +7,7 @@ export const journalSlice = createSlice({
     name: 'journal',
     initialState: {
         isSaving: false,
-        saveMessage: '',
+        messageSaved: '',
         notes: [],
         active: null
         /*        active: {
@@ -33,27 +33,66 @@ export const journalSlice = createSlice({
         setActiveNote: (state, action) => {
             console.log(action.payload)
             state.active = action.payload
+            state.saveMessage = ''
 
         },
+
         setNotes: (state, action) => {
 
             state.notes = action.payload
 
         },
 
-        setSaving: (state, action) => {
-
+        setSaving: (state) => {
+            state.isSaving = true
+            state.messageSaved = ''
         },
 
         updateNote: (state, action) => {
+            state.isSaving = false
+            state.notes = state.notes.map((note) => {
+                if (note.id === action.payload.id) {
+                    return action.payload
+                }
+                return note
+            })
+            state.messageSaved = `${action.payload.title}, actualizada correctamente`
+
+
+        },
+
+        setPhotosToActiveNote: (state, action) => {
+
+            state.active.imageUrls = [...state.active.imageUrls, ...action.payload]
+            state.isSaving = false
+        },
+
+        clearNotesLogout: (state) => {
+
+            state.isSaving = false;
+            state.messageSaved = '';
+            state.notes = [];
+            state.active = null;
 
         },
 
         deleteNoteById: (state, action) => {
+            state.active = null
+            state.notes = state.notes.filter(note => note.id !== action.payload)
 
         }
 
     }
 })
 
-export const { addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, deleteNoteById, savingNewNote } = journalSlice.actions
+export const {
+    addNewEmptyNote,
+    clearNotesLogout,
+    deleteNoteById,
+    savingNewNote,
+    setActiveNote,
+    setNotes,
+    setPhotosToActiveNote,
+    setSaving,
+    updateNote,
+} = journalSlice.actions
